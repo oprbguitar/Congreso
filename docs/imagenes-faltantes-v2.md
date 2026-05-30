@@ -4,6 +4,8 @@ Fuente usada: https://revisatucandidato.pe/congreso-peru-2026
 
 Se descargaron y mapearon 188 fotos con coincidencia segura. Dos registros de la nómina local `busqueda.md` no aparecieron con coincidencia segura en Revisa Tu Candidato al momento de la sincronización:
 
+Esos mismos 188 registros cuentan con ficha RTC ampliada en `src/data/candidateDetails.ts`. Los dos registros siguientes quedan pendientes también para el cruce de ficha individual:
+
 | ID local | Nombre | Cámara | Partido | Archivo esperado |
 |---|---|---|---|---|
 | `deputies-48` | Kim Tami Muñoz Yurivilca | Cámara de Diputados | Fuerza Popular | `kim-tami-munoz-yurivilca.jpg` |

@@ -17,6 +17,7 @@ Esta página presenta una lectura visual de los **60 senadores** y **130 diputad
 - Candidato destacado al pasar el mouse o tocar un asiento.
 - Foto local del candidato cuando fue encontrada en Revisa Tu Candidato/JNE.
 - Ficha con cámara, circunscripción, posición, origen, trayectoria y estado de verificación.
+- Pestañas de hoja de vida por candidato: educación, trayectoria política, contratos con el Estado, propiedades, deudas, sanciones y experiencia profesional.
 - Vista de facultades detalladas del Senado y la Cámara de Diputados.
 - Fuentes normativas: ONPE, Ley 31988 y reglamentos bicamerales.
 - Documentación de discrepancias y fotografías faltantes.
@@ -25,7 +26,7 @@ Esta página presenta una lectura visual de los **60 senadores** y **130 diputad
 
 - `busqueda.md`: fuente local principal para la nómina persona por persona.
 - `docs/detalle-nuevo-congreso.md`: información ampliada, lectura analítica y límites.
-- https://revisatucandidato.pe/congreso-peru-2026: fotografías de candidatos y referencia de composición provisional al 17 de mayo de 2026.
+- https://revisatucandidato.pe/congreso-peru-2026: fotografías, fichas de hoja de vida y referencia de composición provisional al 17 de mayo de 2026.
 - ONPE, Congreso de la República y Ley 31988 para estructura bicameral y marco normativo.
 
 La app prioriza la nómina local de `busqueda.md`. Cuando una fuente externa presenta una distribución agregada distinta, la diferencia se documenta y no se mezcla silenciosamente con los datos base.
