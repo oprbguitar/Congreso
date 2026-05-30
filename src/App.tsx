@@ -1,16 +1,33 @@
-import { Search, ShieldCheck, Sparkles } from "lucide-react";
+import {
+  Flag,
+  Landmark,
+  MapPinned,
+  Search,
+  ShieldCheck,
+  Users,
+  Vote,
+} from "lucide-react";
 import { type CSSProperties, useMemo, useState } from "react";
+import { FacultiesView } from "./components/FacultiesView";
 import { Hemicycle } from "./components/Hemicycle";
-import { NormativePanel } from "./components/NormativePanel";
 import { PartyBars } from "./components/PartyBars";
 import { ProfileCard } from "./components/ProfileCard";
 import { REPRESENTATIVES, type Chamber, type Representative } from "./data/congress";
 import { PARTIES, PARTY_ORDER } from "./data/parties";
+import { CANDIDATE_PROFILES } from "./data/profiles";
 import { normalizeText } from "./utils";
 
 type ChamberFilter = "all" | Chamber;
+type ViewMode = "resumen" | "composicion" | "facultades";
+
+const viewLabels: Record<ViewMode, string> = {
+  resumen: "Resumen general",
+  composicion: "Composición",
+  facultades: "Facultades detalladas",
+};
 
 export function App() {
+  const [activeView, setActiveView] = useState<ViewMode>("resumen");
   const [chamber, setChamber] = useState<ChamberFilter>("all");
   const [party, setParty] = useState<string>("all");
   const [query, setQuery] = useState("");
@@ -41,42 +58,52 @@ export function App() {
 
   return (
     <main>
-      <section className="hero">
-        <nav className="topbar" aria-label="Navegación principal">
-          <a className="brand" href="#">
+      <section className="v2-hero">
+        <nav className="v2-topbar" aria-label="Navegación principal">
+          <a className="v2-brand" href="#">
             <span>CB</span>
-            Congreso Bicameral Perú 2026
+            Congreso Bicameral Perú
           </a>
-          <a href="#normativa">Normativa</a>
+          <span>Normativa: Ley 31988</span>
         </nav>
 
-        <div className="hero-grid">
-          <div className="hero-copy">
-            <h1>Congreso Bicameral Perú 2026</h1>
+        <div className="v2-hero-grid">
+          <div className="v2-title-block">
+            <h1>
+              Congreso Bicameral
+              <span>Perú <em>2026</em></span>
+            </h1>
             <p>
-              Visualización offline de ganadores proyectados para Senado y Cámara de
+              Visualización informativa de candidatos elegidos para Senado y Cámara de
               Diputados, organizada por partido, circunscripción y posición de lista.
             </p>
-            <div className="hero-stats" aria-label="Resumen de cámaras">
-              <span>
-                <strong>60</strong> senadores
-              </span>
-              <span>
-                <strong>130</strong> diputados
-              </span>
-              <span>
-                <strong>6</strong> partidos
-              </span>
-            </div>
           </div>
 
-          <div className="control-deck">
+          <div className="v2-nav">
+            {(Object.keys(viewLabels) as ViewMode[]).map((view) => (
+              <button
+                className={activeView === view ? "is-active" : ""}
+                key={view}
+                onClick={() => setActiveView(view)}
+                type="button"
+              >
+                {view === "resumen" && <Vote size={20} />}
+                {view === "composicion" && <Users size={20} />}
+                {view === "facultades" && <ShieldCheck size={20} />}
+                {viewLabels[view]}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {activeView !== "facultades" && (
+          <div className="filter-console">
             <div className="search-box">
               <Search size={18} />
               <input
                 aria-label="Buscar por nombre, partido o circunscripción"
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder="Buscar persona, región o partido"
+                placeholder="Buscar congresista, región o partido"
                 value={query}
               />
             </div>
@@ -112,70 +139,137 @@ export function App() {
                   style={{ "--party": PARTIES[partyId].color } as CSSProperties}
                   type="button"
                 >
-                  <img src={PARTIES[partyId].logo} alt="" />
+                  <i style={{ backgroundColor: PARTIES[partyId].color }} />
                   {PARTIES[partyId].shortName}
                 </button>
               ))}
             </div>
           </div>
-        </div>
+        )}
       </section>
 
-      <section className="visual-shell">
-        <div className="chamber-stack">
-          {(chamber === "all" || chamber === "senate") && (
-            <Hemicycle
-              items={senate}
-              onSelect={selectPerson}
-              selectedId={selected?.id ?? null}
-              subtitle="30 nacionales + 30 regionales"
-              title="Senado"
-            />
-          )}
-          {(chamber === "all" || chamber === "deputies") && (
-            <Hemicycle
-              items={deputies}
-              onSelect={selectPerson}
-              selectedId={selected?.id ?? null}
-              subtitle="Representación por distrito electoral múltiple"
-              title="Cámara de Diputados"
-            />
-          )}
-        </div>
+      {activeView === "facultades" ? (
+        <FacultiesView />
+      ) : (
+        <>
+          <section className="metrics-grid">
+            <MetricCard icon={Landmark} tone="red" value="60" label="senadores" note="Representación nacional y regional." />
+            <MetricCard icon={Users} tone="blue" value="130" label="diputados" note="Representación por población y distritos." />
+            <MetricCard icon={Flag} tone="purple" value="6" label="partidos" note="Organizaciones con representación." />
+            <MetricCard icon={MapPinned} tone="green" value="30" label="distritos senatoriales" note="Representación nacional y regional." />
+          </section>
 
-        <aside className="insight-rail">
-          <ProfileCard person={selected} />
-          <PartyBars activeParty={party} items={fullSenate} onParty={setParty} title="Senado" />
-          <PartyBars
-            activeParty={party}
-            items={fullDeputies}
-            onParty={setParty}
-            title="Diputados"
-          />
-          <div className="notice">
-            <ShieldCheck size={18} />
-            <p>
-              Nómina proyectada/de alta confianza según fuente local. Revisar proclamación
-              final del JNE si se actualiza.
-            </p>
-          </div>
-        </aside>
-      </section>
+          <section className="visual-shell v2-shell">
+            <div className="chamber-stack">
+              {(chamber === "all" || chamber === "senate") && (
+                <Hemicycle
+                  items={senate}
+                  onSelect={selectPerson}
+                  selectedId={selected?.id ?? null}
+                  subtitle="Representación: 30 nacionales + 30 regionales"
+                  title="Senado"
+                />
+              )}
+              {(chamber === "all" || chamber === "deputies") && (
+                <Hemicycle
+                  items={deputies}
+                  onSelect={selectPerson}
+                  selectedId={selected?.id ?? null}
+                  subtitle="Representación por distrito electoral múltiple"
+                  title="Cámara de Diputados"
+                />
+              )}
+            </div>
 
-      <section className="legend-band" aria-label="Leyenda de partidos">
-        <div>
-          <Sparkles size={18} />
-          <span>Logos descargados para uso offline</span>
-        </div>
-        {PARTY_ORDER.map((partyId) => (
-          <a href={PARTIES[partyId].source} key={partyId} rel="noreferrer" target="_blank">
-            <img src={PARTIES[partyId].logo} alt="" />
-            <span>{PARTIES[partyId].name}</span>
-          </a>
-        ))}
-      </section>
+            <aside className="insight-rail">
+              <ProfileCard person={selected} />
+              <PartyBars activeParty={party} items={fullSenate} onParty={setParty} title="Distribución por partido - Senado" />
+              <PartyBars
+                activeParty={party}
+                items={fullDeputies}
+                onParty={setParty}
+                title="Distribución por partido - Diputados"
+              />
+              <div className="notice">
+                <ShieldCheck size={18} />
+                <p>
+                  Fuente principal: nómina local `busqueda.md`. Fotos tomadas de Revisa Tu
+                  Candidato/JNE y guardadas para uso offline.
+                </p>
+              </div>
+            </aside>
+          </section>
 
-      <NormativePanel />
+          <CompositionSection visible={activeView === "composicion"} />
+        </>
+      )}
     </main>
+  );
+}
+
+type MetricCardProps = {
+  icon: typeof Landmark;
+  tone: string;
+  value: string;
+  label: string;
+  note: string;
+};
+
+function MetricCard({ icon: Icon, tone, value, label, note }: MetricCardProps) {
+  return (
+    <article className={`metric-card ${tone}`}>
+      <Icon size={42} />
+      <div>
+        <strong>{value}</strong>
+        <span>{label}</span>
+        <p>{note}</p>
+      </div>
+    </article>
+  );
+}
+
+function CompositionSection({ visible }: { visible: boolean }) {
+  const highlighted = REPRESENTATIVES.filter((person) =>
+    ["senate-24", "senate-32", "senate-53", "deputies-1", "deputies-91", "deputies-113"].includes(
+      person.id,
+    ),
+  );
+
+  return (
+    <section className={`composition-section ${visible ? "is-expanded" : ""}`}>
+      <div className="composition-header">
+        <h2>Candidatos elegidos destacados</h2>
+        <p>
+          Selección de perfiles con ficha ampliada o alta visibilidad pública. La nómina completa
+          permanece representada en los hemiciclos interactivos.
+        </p>
+      </div>
+      <div className="mini-profile-grid">
+        {highlighted.map((person) => {
+          const party = PARTIES[person.partyId];
+          const profile = CANDIDATE_PROFILES[person.id];
+
+          return (
+            <article key={person.id} style={{ "--party": party.color } as CSSProperties}>
+              {profile.photo ? <img src={profile.photo} alt={`Foto de ${person.name}`} /> : <span />}
+              <div>
+                <strong>{person.name}</strong>
+                <small>{person.chamber === "senate" ? "Senado" : "Diputados"} · {party.shortName}</small>
+                <p>{profile.bio}</p>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+      <div className="quick-reading">
+        <h3>Lectura rápida</h3>
+        <ul>
+          <li>Fuerza Popular es la fuerza con mayor representación en ambas cámaras.</li>
+          <li>La Cámara de Diputados concentra una representación más diversa y territorial.</li>
+          <li>El Senado reúne perfiles de revisión, trayectoria nacional y equilibrio institucional.</li>
+          <li>La proclamación oficial final corresponde a los organismos electorales.</li>
+        </ul>
+      </div>
+    </section>
   );
 }
