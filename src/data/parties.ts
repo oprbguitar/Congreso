@@ -16,6 +16,8 @@ export type PartyMeta = {
   source: string;
 };
 
+const assetPath = (path: string) => `${import.meta.env.BASE_URL}${path}`;
+
 export const PARTIES: Record<PartyId, PartyMeta> = {
   "fuerza-popular": {
     id: "fuerza-popular",
@@ -23,7 +25,7 @@ export const PARTIES: Record<PartyId, PartyMeta> = {
     shortName: "FP",
     color: "#f05a28",
     glow: "rgba(240, 90, 40, .42)",
-    logo: "/parties/fuerza-popular-official.svg",
+    logo: assetPath("parties/fuerza-popular-official.svg"),
     source: "https://commons.wikimedia.org/wiki/File:Logo_of_the_Popular_Force_(2024).svg",
   },
   "juntos-por-el-peru": {
@@ -32,7 +34,7 @@ export const PARTIES: Record<PartyId, PartyMeta> = {
     shortName: "JP",
     color: "#0fb166",
     glow: "rgba(15, 177, 102, .42)",
-    logo: "/parties/juntos-por-el-peru-official.svg",
+    logo: assetPath("parties/juntos-por-el-peru-official.svg"),
     source: "https://commons.wikimedia.org/wiki/File:Logo_juntos_por_el_Peru.svg",
   },
   "renovacion-popular": {
@@ -41,7 +43,7 @@ export const PARTIES: Record<PartyId, PartyMeta> = {
     shortName: "RP",
     color: "#29b7e8",
     glow: "rgba(41, 183, 232, .42)",
-    logo: "/parties/renovacion-popular-official.png",
+    logo: assetPath("parties/renovacion-popular-official.png"),
     source: "https://commons.wikimedia.org/wiki/Category:Renovaci%C3%B3n_Popular",
   },
   "buen-gobierno": {
@@ -50,7 +52,7 @@ export const PARTIES: Record<PartyId, PartyMeta> = {
     shortName: "PBG",
     color: "#ffd33d",
     glow: "rgba(255, 211, 61, .38)",
-    logo: "/parties/buen-gobierno-official.jpg",
+    logo: assetPath("parties/buen-gobierno-official.jpg"),
     source: "https://commons.wikimedia.org/wiki/File:PBG_Logo.jpg",
   },
   obras: {
@@ -59,7 +61,7 @@ export const PARTIES: Record<PartyId, PartyMeta> = {
     shortName: "OBRAS",
     color: "#e23b3f",
     glow: "rgba(226, 59, 63, .42)",
-    logo: "/parties/obras-official.png",
+    logo: assetPath("parties/obras-official.png"),
     source: "https://commons.wikimedia.org/wiki/File:Logo_of_the_Civic_Party_OBRAS.png",
   },
   "ahora-nacion": {
@@ -68,7 +70,7 @@ export const PARTIES: Record<PartyId, PartyMeta> = {
     shortName: "AN",
     color: "#8b5cf6",
     glow: "rgba(139, 92, 246, .42)",
-    logo: "/parties/ahora-nacion-official.jpg",
+    logo: assetPath("parties/ahora-nacion-official.jpg"),
     source: "https://commons.wikimedia.org/wiki/File:Logo_Ahora_Naci%C3%B3n_2026.jpg",
   },
 };
