@@ -10,9 +10,11 @@ type ProfileCardProps = {
 
 export function ProfileCard({ person }: ProfileCardProps) {
   const [activeDetail, setActiveDetail] = useState<(typeof DETAIL_SECTION_ORDER)[number]>("education");
+  const [showDetails, setShowDetails] = useState(false);
 
   useEffect(() => {
     setActiveDetail("education");
+    setShowDetails(false);
   }, [person?.id]);
 
   if (!person) {
@@ -75,18 +77,25 @@ export function ProfileCard({ person }: ProfileCardProps) {
           </dl>
         </div>
       </div>
-      <div className="candidate-notes">
-        <p>{profile.bio}</p>
-        <p>
-          <strong>Origen:</strong> {profile.origin}
-        </p>
-        <p>
-          <strong>Trayectoria:</strong> {profile.trajectory}
-        </p>
-        <span>{status}</span>
-      </div>
-      {detail ? (
+      <button
+        className="detail-toggle"
+        onClick={() => setShowDetails((current) => !current)}
+        type="button"
+      >
+        {showDetails ? "Ocultar hoja de vida" : "Ver hoja de vida detallada"}
+      </button>
+      {detail && showDetails ? (
         <div className="candidate-detail-tabs">
+          <div className="candidate-notes">
+            <p>{profile.bio}</p>
+            <p>
+              <strong>Origen:</strong> {profile.origin}
+            </p>
+            <p>
+              <strong>Trayectoria:</strong> {profile.trajectory}
+            </p>
+            <span>{status}</span>
+          </div>
           <div className="detail-meta">
             <span>DNI: {detail.dni || "No disponible"}</span>
             <span>{detail.age || "Edad no disponible"}</span>
@@ -131,13 +140,13 @@ export function ProfileCard({ person }: ProfileCardProps) {
             </div>
           ) : null}
         </div>
-      ) : (
+      ) : !detail && showDetails ? (
         <div className="candidate-detail-tabs is-missing">
           <p>
             No se pudo vincular esta persona con una ficha individual de Revisa Tu Candidato.
           </p>
         </div>
-      )}
+      ) : null}
     </aside>
   );
 }

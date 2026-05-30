@@ -7,14 +7,13 @@ import {
   Users,
   Vote,
 } from "lucide-react";
-import { type CSSProperties, useEffect, useMemo, useState } from "react";
+import { type CSSProperties, useMemo, useState } from "react";
 import { FacultiesView } from "./components/FacultiesView";
 import { Hemicycle } from "./components/Hemicycle";
 import { PartyBars } from "./components/PartyBars";
 import { ProfileCard } from "./components/ProfileCard";
 import { REPRESENTATIVES, type Chamber, type Representative } from "./data/congress";
 import { PARTIES, PARTY_ORDER } from "./data/parties";
-import { CANDIDATE_PROFILES } from "./data/profiles";
 import { normalizeText } from "./utils";
 
 type ChamberFilter = "all" | Chamber;
@@ -32,24 +31,6 @@ export function App() {
   const [party, setParty] = useState<string>("all");
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<Representative | null>(REPRESENTATIVES[0]);
-  const [pinRail, setPinRail] = useState(false);
-
-  useEffect(() => {
-    function updateRailState() {
-      const shell = document.querySelector(".visual-shell");
-      const shouldPin = Boolean(shell && shell.getBoundingClientRect().top <= 76 && window.innerWidth > 1180);
-      setPinRail(shouldPin);
-    }
-
-    updateRailState();
-    window.addEventListener("scroll", updateRailState, { passive: true });
-    window.addEventListener("resize", updateRailState);
-
-    return () => {
-      window.removeEventListener("scroll", updateRailState);
-      window.removeEventListener("resize", updateRailState);
-    };
-  }, [activeView]);
 
   const filtered = useMemo(() => {
     const needle = normalizeText(query);
@@ -199,7 +180,7 @@ export function App() {
               )}
             </div>
 
-            <aside className={`insight-rail ${pinRail ? "is-fixed" : ""}`}>
+            <aside className="insight-rail">
               <ProfileCard person={selected} />
               <PartyBars activeParty={party} items={fullSenate} onParty={setParty} title="Distribución por partido - Senado" />
               <PartyBars
@@ -218,9 +199,10 @@ export function App() {
             </aside>
           </section>
 
-          <CompositionSection visible={activeView === "composicion"} />
+          <SiteFooter />
         </>
       )}
+      {activeView === "facultades" ? <SiteFooter /> : null}
     </main>
   );
 }
@@ -246,48 +228,25 @@ function MetricCard({ icon: Icon, tone, value, label, note }: MetricCardProps) {
   );
 }
 
-function CompositionSection({ visible }: { visible: boolean }) {
-  const highlighted = REPRESENTATIVES.filter((person) =>
-    ["senate-24", "senate-32", "senate-53", "deputies-1", "deputies-91", "deputies-113"].includes(
-      person.id,
-    ),
-  );
-
+function SiteFooter() {
   return (
-    <section className={`composition-section ${visible ? "is-expanded" : ""}`}>
-      <div className="composition-header">
-        <h2>Candidatos elegidos destacados</h2>
+    <footer className="site-footer">
+      <div>
+        <strong>Congreso Bicameral Perú 2026</strong>
         <p>
-          Selección de perfiles con ficha ampliada o alta visibilidad pública. La nómina completa
-          permanece representada en los hemiciclos interactivos.
+          Visualización informativa offline sobre la composición proyectada del Senado y la Cámara
+          de Diputados, sus representantes, partidos y facultades institucionales.
         </p>
       </div>
-      <div className="mini-profile-grid">
-        {highlighted.map((person) => {
-          const party = PARTIES[person.partyId];
-          const profile = CANDIDATE_PROFILES[person.id];
-
-          return (
-            <article key={person.id} style={{ "--party": party.color } as CSSProperties}>
-              {profile.photo ? <img src={profile.photo} alt={`Foto de ${person.name}`} /> : <span />}
-              <div>
-                <strong>{person.name}</strong>
-                <small>{person.chamber === "senate" ? "Senado" : "Diputados"} · {party.shortName}</small>
-                <p>{profile.bio}</p>
-              </div>
-            </article>
-          );
-        })}
+      <div>
+        <strong>Autor: Pierre R.</strong>
+        <p>Imágenes referenciales tomadas de internet para fines informativos.</p>
+        <p>Fuentes: ONPE, JNE, Revisa Tu Candidato, Congreso de la República y El Peruano.</p>
       </div>
-      <div className="quick-reading">
-        <h3>Lectura rápida</h3>
-        <ul>
-          <li>Fuerza Popular es la fuerza con mayor representación en ambas cámaras.</li>
-          <li>La Cámara de Diputados concentra una representación más diversa y territorial.</li>
-          <li>El Senado reúne perfiles de revisión, trayectoria nacional y equilibrio institucional.</li>
-          <li>La proclamación oficial final corresponde a los organismos electorales.</li>
-        </ul>
+      <div>
+        <strong>Consultas adicionales</strong>
+        <a href="mailto:peru.labs.pe@gmail.com">peru.labs.pe@gmail.com</a>
       </div>
-    </section>
+    </footer>
   );
 }

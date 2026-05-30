@@ -246,7 +246,7 @@ body {
 }
 
 .v2-shell {
-  grid-template-columns: minmax(0, 1fr) minmax(340px, 420px);
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 420px);
   padding-top: 0;
 }
 
@@ -282,8 +282,8 @@ body {
 
 .featured-body {
   display: grid;
-  gap: 18px;
-  grid-template-columns: 170px 1fr;
+  gap: 14px;
+  grid-template-columns: 132px minmax(0, 1fr);
 }
 
 .candidate-photo {
@@ -294,6 +294,25 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 8px;
   overflow: hidden;
+}
+
+.featured-card h3 {
+  font-size: clamp(1.3rem, 1.65vw, 1.75rem);
+  margin: 10px 0;
+  overflow-wrap: anywhere;
+}
+
+.featured-card dl {
+  gap: 6px;
+}
+
+.featured-card dl div {
+  padding: 7px 9px;
+}
+
+.featured-card .profile-party img {
+  height: 28px;
+  width: 28px;
 }
 
 .candidate-photo img {
@@ -318,8 +337,8 @@ body {
   display: grid;
   gap: 8px;
   line-height: 1.42;
-  margin-top: 14px;
-  padding-top: 14px;
+  margin-top: 0;
+  padding-top: 12px;
 }
 
 .candidate-notes p {
@@ -339,6 +358,20 @@ body {
   gap: 12px;
   margin-top: 14px;
   padding-top: 14px;
+}
+
+.detail-toggle {
+  background: color-mix(in srgb, var(--party), transparent 84%);
+  border: 1px solid color-mix(in srgb, var(--party), transparent 48%);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 900;
+  margin-top: 14px;
+  min-height: 38px;
+  padding: 8px 12px;
+  text-transform: uppercase;
+  width: 100%;
 }
 
 .candidate-detail-tabs.is-missing {
@@ -454,8 +487,7 @@ body {
   gap: 7px;
   line-height: 1.34;
   margin: 10px 0 0;
-  max-height: 260px;
-  overflow: auto;
+  overflow-wrap: anywhere;
   padding-left: 18px;
   scrollbar-color: var(--party) rgba(255, 255, 255, 0.06);
 }
@@ -844,6 +876,35 @@ body {
   line-height: 1.42;
 }
 
+.site-footer {
+  background: rgba(6, 10, 20, 0.92);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  display: grid;
+  gap: 22px;
+  grid-template-columns: 1.25fr 1fr 0.7fr;
+  margin-top: 18px;
+  padding: 24px clamp(18px, 4vw, 56px) 30px;
+}
+
+.site-footer strong {
+  color: #f6f8ff;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.site-footer p,
+.site-footer a {
+  color: #aeb9d2;
+  display: block;
+  line-height: 1.48;
+  margin: 5px 0 0;
+}
+
+.site-footer a {
+  color: #56d190;
+  font-weight: 800;
+}
+
 button,
 input {
   font: inherit;
@@ -1155,20 +1216,8 @@ main {
   align-self: start;
   display: grid;
   gap: 14px;
-  position: sticky;
-  top: 76px;
-  height: calc(100vh - 88px);
-  overflow: auto;
-  padding-right: 4px;
-  scrollbar-color: rgba(255, 255, 255, 0.28) rgba(255, 255, 255, 0.05);
-  z-index: 18;
-}
-
-.insight-rail.is-fixed {
-  position: fixed;
-  right: clamp(18px, 4vw, 56px);
-  top: 76px;
-  width: min(420px, 30vw);
+  min-width: 0;
+  position: static;
 }
 
 .profile-card {
@@ -1440,11 +1489,6 @@ main {
     position: static;
   }
 
-  .insight-rail.is-fixed {
-    position: static;
-    width: auto;
-  }
-
   .metrics-grid,
   .mini-profile-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1464,7 +1508,8 @@ main {
   }
 
   .law-grid,
-  .shared-panel ul {
+  .shared-panel ul,
+  .site-footer {
     grid-template-columns: 1fr;
   }
 }
