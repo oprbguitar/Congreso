@@ -4,7 +4,7 @@ Visualización interactiva e informativa del Congreso Bicameral peruano proyecta
 
 Demo pública:
 
-https://oprbguitar.github.io/TestApp/
+https://oprbguitar.github.io/Congreso/
 
 ## Qué es
 
