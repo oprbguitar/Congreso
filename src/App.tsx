@@ -5,7 +5,6 @@ import {
   Search,
   ShieldCheck,
   Users,
-  Vote,
 } from "lucide-react";
 import { type CSSProperties, useMemo, useState } from "react";
 import { FacultiesView } from "./components/FacultiesView";
@@ -17,16 +16,15 @@ import { PARTIES, PARTY_ORDER } from "./data/parties";
 import { normalizeText } from "./utils";
 
 type ChamberFilter = "all" | Chamber;
-type ViewMode = "resumen" | "composicion" | "facultades";
+type ViewMode = "composicion" | "facultades";
 
 const viewLabels: Record<ViewMode, string> = {
-  resumen: "Resumen general",
   composicion: "Composición",
   facultades: "Facultades detalladas",
 };
 
 export function App() {
-  const [activeView, setActiveView] = useState<ViewMode>("resumen");
+  const [activeView, setActiveView] = useState<ViewMode>("composicion");
   const [chamber, setChamber] = useState<ChamberFilter>("all");
   const [party, setParty] = useState<string>("all");
   const [query, setQuery] = useState("");
@@ -63,7 +61,11 @@ export function App() {
             <span>CB</span>
             Congreso Bicameral Perú
           </a>
-          <span>Normativa: Ley 31988</span>
+          <div className="topbar-meta">
+            <span>Autor: Pierre R.</span>
+            <a href="mailto:peru.labs.pe@gmail.com">peru.labs.pe@gmail.com</a>
+            <span>Normativa: Ley 31988</span>
+          </div>
         </nav>
 
         <div className="v2-hero-grid">
@@ -86,7 +88,6 @@ export function App() {
                 onClick={() => setActiveView(view)}
                 type="button"
               >
-                {view === "resumen" && <Vote size={20} />}
                 {view === "composicion" && <Users size={20} />}
                 {view === "facultades" && <ShieldCheck size={20} />}
                 {viewLabels[view]}
@@ -199,10 +200,8 @@ export function App() {
             </aside>
           </section>
 
-          <SiteFooter />
         </>
       )}
-      {activeView === "facultades" ? <SiteFooter /> : null}
     </main>
   );
 }
@@ -225,28 +224,5 @@ function MetricCard({ icon: Icon, tone, value, label, note }: MetricCardProps) {
         <p>{note}</p>
       </div>
     </article>
-  );
-}
-
-function SiteFooter() {
-  return (
-    <footer className="site-footer">
-      <div>
-        <strong>Congreso Bicameral Perú 2026</strong>
-        <p>
-          Visualización informativa offline sobre la composición proyectada del Senado y la Cámara
-          de Diputados, sus representantes, partidos y facultades institucionales.
-        </p>
-      </div>
-      <div>
-        <strong>Autor: Pierre R.</strong>
-        <p>Imágenes referenciales tomadas de internet para fines informativos.</p>
-        <p>Fuentes: ONPE, JNE, Revisa Tu Candidato, Congreso de la República y El Peruano.</p>
-      </div>
-      <div>
-        <strong>Consultas adicionales</strong>
-        <a href="mailto:peru.labs.pe@gmail.com">peru.labs.pe@gmail.com</a>
-      </div>
-    </footer>
   );
 }

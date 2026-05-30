@@ -97,8 +97,6 @@ export function ProfileCard({ person }: ProfileCardProps) {
             <span>{status}</span>
           </div>
           <div className="detail-meta">
-            <span>DNI: {detail.dni || "No disponible"}</span>
-            <span>{detail.age || "Edad no disponible"}</span>
             <a href={detail.sourceUrl} target="_blank" rel="noreferrer">
               Ficha RTC
             </a>
