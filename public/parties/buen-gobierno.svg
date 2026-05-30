@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Partido del Buen Gobierno">
+  <rect width="128" height="128" rx="24" fill="#ffd33d"/>
+  <circle cx="64" cy="52" r="25" fill="#b5122b"/>
+  <path d="M31 91c14-10 25-15 33-15s19 5 33 15c-17 10-49 10-66 0Z" fill="#101828"/>
+  <path d="M46 52h36M64 34v36" stroke="#fff" stroke-width="8" stroke-linecap="round"/>
+</svg>

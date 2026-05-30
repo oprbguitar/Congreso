@@ -1,0 +1,26 @@
+{
+  "name": "congreso-bicameral-peru-2026",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc && vite build",
+    "build:github": "tsc && vite build --base=/TestApp/",
+    "preview": "vite preview --host 0.0.0.0",
+    "validate:data": "node scripts/validate-data.mjs"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^5.0.0",
+    "lucide-react": "^0.468.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "typescript": "^5.8.3",
+    "vite": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.15",
+    "@types/react-dom": "^19.2.3",
+    "playwright": "^1.60.0"
+  }
+}

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Partido Cívico OBRAS">
+  <rect width="128" height="128" rx="24" fill="#e23b3f"/>
+  <path d="M29 86h70v18H29zM37 65h54v16H37zM47 43h34v17H47zM57 24h14v15H57z" fill="#fff"/>
+  <path d="M29 86h70v6H29zM37 65h54v6H37zM47 43h34v6H47z" fill="#171923" opacity=".24"/>
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Juntos por el Perú">
+  <rect width="128" height="128" rx="24" fill="#0fb166"/>
+  <circle cx="45" cy="47" r="19" fill="#e73343"/>
+  <circle cx="79" cy="47" r="19" fill="#fff"/>
+  <path d="M26 88c13-18 30-24 51-19 10 2 18 8 25 19-21 18-55 21-76 0Z" fill="#fff"/>
+  <path d="M33 87c11-12 24-16 40-12 8 2 15 6 21 12-17 10-43 12-61 0Z" fill="#e73343"/>
+</svg>
