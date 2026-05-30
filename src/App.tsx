@@ -7,7 +7,7 @@ import {
   Users,
   Vote,
 } from "lucide-react";
-import { type CSSProperties, useMemo, useState } from "react";
+import { type CSSProperties, useEffect, useMemo, useState } from "react";
 import { FacultiesView } from "./components/FacultiesView";
 import { Hemicycle } from "./components/Hemicycle";
 import { PartyBars } from "./components/PartyBars";
@@ -32,6 +32,24 @@ export function App() {
   const [party, setParty] = useState<string>("all");
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<Representative | null>(REPRESENTATIVES[0]);
+  const [pinRail, setPinRail] = useState(false);
+
+  useEffect(() => {
+    function updateRailState() {
+      const shell = document.querySelector(".visual-shell");
+      const shouldPin = Boolean(shell && shell.getBoundingClientRect().top <= 76 && window.innerWidth > 1180);
+      setPinRail(shouldPin);
+    }
+
+    updateRailState();
+    window.addEventListener("scroll", updateRailState, { passive: true });
+    window.addEventListener("resize", updateRailState);
+
+    return () => {
+      window.removeEventListener("scroll", updateRailState);
+      window.removeEventListener("resize", updateRailState);
+    };
+  }, [activeView]);
 
   const filtered = useMemo(() => {
     const needle = normalizeText(query);
@@ -181,7 +199,7 @@ export function App() {
               )}
             </div>
 
-            <aside className="insight-rail">
+            <aside className={`insight-rail ${pinRail ? "is-fixed" : ""}`}>
               <ProfileCard person={selected} />
               <PartyBars activeParty={party} items={fullSenate} onParty={setParty} title="Distribución por partido - Senado" />
               <PartyBars

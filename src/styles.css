@@ -37,14 +37,24 @@ body {
 }
 
 .v2-hero {
-  padding: 26px clamp(18px, 4vw, 48px) 18px;
+  padding: 92px clamp(18px, 4vw, 48px) 18px;
 }
 
 .v2-topbar {
   align-items: center;
+  backdrop-filter: blur(22px);
+  background: linear-gradient(90deg, rgba(9, 13, 25, 0.92), rgba(9, 13, 25, 0.74));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
   display: flex;
   justify-content: space-between;
   min-height: 46px;
+  padding: 8px 12px;
+  position: fixed;
+  left: clamp(18px, 4vw, 48px);
+  right: clamp(18px, 4vw, 48px);
+  top: 10px;
+  z-index: 40;
 }
 
 .v2-brand {
@@ -236,7 +246,7 @@ body {
 }
 
 .v2-shell {
-  grid-template-columns: minmax(0, 1fr) 520px;
+  grid-template-columns: minmax(0, 1fr) minmax(340px, 420px);
   padding-top: 0;
 }
 
@@ -694,11 +704,23 @@ body {
   background: rgba(255, 255, 255, 0.055);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 8px;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.025);
   display: grid;
   gap: 10px;
   grid-template-columns: 34px 1fr;
   min-height: 78px;
   padding: 12px;
+  position: relative;
+}
+
+.flow-step:not(:last-child)::after {
+  background: linear-gradient(90deg, #ff4d5a, #2f81ff);
+  content: "";
+  height: 2px;
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  width: 10px;
 }
 
 .flow-step strong {
@@ -737,6 +759,89 @@ body {
 .v2-sources {
   justify-content: center;
   margin-top: 20px;
+}
+
+.legal-matrix {
+  margin-top: 18px;
+}
+
+.shared-panel,
+.law-grid {
+  backdrop-filter: blur(22px);
+  background: linear-gradient(145deg, rgba(16, 25, 43, 0.9), rgba(8, 13, 27, 0.72));
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.36);
+  margin-top: 18px;
+  padding: 20px;
+}
+
+.shared-panel > div,
+.law-grid-title {
+  align-items: center;
+  display: flex;
+  gap: 14px;
+}
+
+.shared-panel svg,
+.law-grid-title svg {
+  border-radius: 999px;
+  box-shadow: inset 0 0 0 1px currentColor;
+  color: #a66bff;
+  flex: 0 0 auto;
+  height: 58px;
+  padding: 13px;
+  width: 58px;
+}
+
+.shared-panel h2,
+.law-grid h2 {
+  margin: 0;
+}
+
+.shared-panel ul {
+  color: #c3cce0;
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  line-height: 1.45;
+  margin: 18px 0 0;
+  padding-left: 20px;
+}
+
+.law-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.law-grid-title {
+  grid-column: 1 / -1;
+  margin-bottom: 4px;
+}
+
+.law-grid-title p {
+  color: #aeb9d2;
+  margin: 6px 0 0;
+}
+
+.law-grid a {
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  display: grid;
+  gap: 7px;
+  min-height: 116px;
+  padding: 14px;
+}
+
+.law-grid a strong {
+  color: #fff;
+}
+
+.law-grid a span {
+  color: #b9c4da;
+  line-height: 1.42;
 }
 
 button,
@@ -1047,10 +1152,23 @@ main {
 }
 
 .insight-rail {
+  align-self: start;
   display: grid;
   gap: 14px;
   position: sticky;
-  top: 18px;
+  top: 76px;
+  height: calc(100vh - 88px);
+  overflow: auto;
+  padding-right: 4px;
+  scrollbar-color: rgba(255, 255, 255, 0.28) rgba(255, 255, 255, 0.05);
+  z-index: 18;
+}
+
+.insight-rail.is-fixed {
+  position: fixed;
+  right: clamp(18px, 4vw, 56px);
+  top: 76px;
+  width: min(420px, 30vw);
 }
 
 .profile-card {
@@ -1315,7 +1433,16 @@ main {
   }
 
   .insight-rail {
+    height: auto;
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
     position: static;
+  }
+
+  .insight-rail.is-fixed {
+    position: static;
+    width: auto;
   }
 
   .metrics-grid,
@@ -1330,6 +1457,15 @@ main {
 
   .flow-steps {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  .flow-step:nth-child(3)::after {
+    display: none;
+  }
+
+  .law-grid,
+  .shared-panel ul {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -1383,6 +1519,7 @@ main {
   .v2-topbar {
     align-items: flex-start;
     gap: 10px;
+    top: 0;
   }
 
   .v2-topbar > span {
@@ -1411,6 +1548,10 @@ main {
   .mini-profile-grid,
   .flow-steps {
     grid-template-columns: 1fr;
+  }
+
+  .flow-step::after {
+    display: none;
   }
 
   .metric-card {
