@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "tsc && vite build",
-    "build:github": "tsc && vite build --base=/TestApp/",
+    "build:github": "tsc && vite build --base=/Congreso/",
     "preview": "vite preview --host 0.0.0.0",
     "validate:data": "node scripts/validate-data.mjs",
     "sync:candidate-photos": "node scripts/sync-candidate-photos.mjs"

@@ -46,6 +46,6 @@ La app conserva la nómina local de 190 representantes como fuente principal. Re
 
 El sitio se publica en:
 
-https://oprbguitar.github.io/TestApp/
+https://oprbguitar.github.io/Congreso/
 
-El workflow `.github/workflows/pages.yml` valida datos, compila con base `/TestApp/` y despliega en GitHub Pages.
+El workflow `.github/workflows/pages.yml` valida datos, compila con base `/Congreso/` y despliega en GitHub Pages.
